@@ -8,44 +8,44 @@ class EventCode {
 }
 
 class EventSubscription {
-  Map<String, List<Handler>> _registered_uris = {};
-  Map<String, List<Handler>> _registered_paths = {};
-  Handler default_behavior;
+  Map<String, List<Handler>> _registeredUris = {};
+  Map<String, List<Handler>> _registeredPaths = {};
+  Handler defaultBehavior;
 
-  static Future<void> _default_behavior_impl(JsonData data) async {
+  static Future<void> _defaultBehaviorImpl(JsonData data) async {
     print(data);
   }
 
-  EventSubscription([this.default_behavior=EventSubscription._default_behavior_impl]);
+  EventSubscription([this.defaultBehavior=EventSubscription._defaultBehaviorImpl]);
 
-  void filter_endpoint(String endpoint, {Handler behavior=EventSubscription._default_behavior_impl}) {
+  void filterEndpoint(String endpoint, {Handler behavior=EventSubscription._defaultBehaviorImpl}) {
     if (endpoint.endsWith('*')) { //then this is a path and we want to glob match
-      this._registered_paths.update(endpoint.substring(0, endpoint.length - 1), (list) => list + [behavior], ifAbsent: () => [behavior]);
+      this._registeredPaths.update(endpoint.substring(0, endpoint.length - 1), (list) => list + [behavior], ifAbsent: () => [behavior]);
     } else {
-      this._registered_uris.update(endpoint, (list) => list + [behavior], ifAbsent: () => [behavior]);
+      this._registeredUris.update(endpoint, (list) => list + [behavior], ifAbsent: () => [behavior]);
     }
   }
 
-  void unfilter_endpoint(String endpoint) {
+  void unfilterEndpoint(String endpoint) {
     if (endpoint.endsWith('*')) { //then this is a path and we want to glob match
-      this._registered_paths.remove(endpoint.substring(0, endpoint.length - 1));
+      this._registeredPaths.remove(endpoint.substring(0, endpoint.length - 1));
     } else {
-      this._registered_uris.remove(endpoint);
+      this._registeredUris.remove(endpoint);
     }
   }
 
   List<Future<void>> tasks(JsonData data) {
     List<Handler> tasks = [];
 
-    this._registered_paths.forEach((key, value) => {
+    this._registeredPaths.forEach((key, value) => {
       data['uri'].startsWith(key)
       ? tasks.addAll(value)
       : {}
     });
 
-    tasks.addAll(this._registered_uris[data['uri']] ?? []);
+    tasks.addAll(this._registeredUris[data['uri']] ?? []);
 
-    if (tasks.isEmpty) tasks.add(this.default_behavior);
+    if (tasks.isEmpty) tasks.add(this.defaultBehavior);
     return tasks.map((e) => e(data)).toList();
   }
 }

@@ -2,7 +2,7 @@ name: teemo
 description: Teemo is a dart library which provides an intuitive interface to the League of Legends LCU API
 repository: https://github.com/elliejs/teemo
 
-version: 0.1.0
+version: 0.1.1
 
 environment:
   sdk: '>=2.13.0 <3.0.0'
