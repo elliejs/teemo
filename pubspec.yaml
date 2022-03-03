@@ -1,0 +1,21 @@
+name: teemo
+description: 'Teemo is a dart library which provides an intuitive interface to the League of Legends LCU API'
+
+version: 0.1.0
+
+environment:
+  sdk: '>=2.13.0 <3.0.0'
+
+dependencies:
+  convert: ^3.0.1
+  io: ^1.0.3
+  flutter:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/riotgames.pem
+
+platforms:
+  linux:
+  macos:
