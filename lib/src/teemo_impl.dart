@@ -17,29 +17,36 @@ class Teemo {
   Teemo._create(this._authKey, this._port, this._restClient, this._websocket)
       : _subscriptions = {};
 
-  static Future<Teemo> create() async {
+  static Future<Teemo> create({int retries = 5, int retryAfter = 5}) async {
     String authKey = '';
     int port = -1;
 
-    if (Platform.isMacOS || Platform.isLinux) {
-      //we can run ps aux
-      ProcessResult psRes = await Process.run('ps', ['aux']);
-      List<String> args = psRes.stdout.split(' ');
+    for (int retry = 0;
+        (authKey == '' || port == -1) && (retry < retries || retries == -1);
+        retry++) {
+      if (Platform.isMacOS || Platform.isLinux) {
+        //we can run ps aux
+        ProcessResult psRes = await Process.run('ps', ['aux']);
+        List<String> args = psRes.stdout.split(' ');
 
-      for (int i = 0; i < args.length; i++) {
-        List<String> keyVal = args[i].split('=');
-        if (keyVal[0] == '--remoting-auth-token') {
-          authKey = keyVal[1];
-        } else if (keyVal[0] == '--app-port') {
-          try {
-            port = int.parse(keyVal[1]);
-          } catch (error) {
-            print('couldn\'t parse port to number');
-            break;
+        for (int i = 0; i < args.length; i++) {
+          List<String> keyVal = args[i].split('=');
+          if (keyVal[0] == '--remoting-auth-token') {
+            authKey = keyVal[1];
+          } else if (keyVal[0] == '--app-port') {
+            try {
+              port = int.parse(keyVal[1]);
+            } catch (error) {
+              print('couldn\'t parse port to number');
+              break;
+            }
           }
-        }
 
+          if (authKey != '' && port >= 0) break;
+        }
         if (authKey != '' && port >= 0) break;
+
+        await new Future.delayed(Duration(seconds: retryAfter));
       }
     }
 
