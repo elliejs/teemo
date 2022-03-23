@@ -7,6 +7,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:teemo/src/EventSubscription.dart';
 import 'package:teemo/src/runes.dart';
 
+/// Teemo, the lcu interface. Use Teemo methods over [EventSubscription] methods or [Rune] methods.
 class Teemo {
   String _authKey;
   int _port;

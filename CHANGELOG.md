@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2022-03-23
+### Added
+- added more docs
+- added example program to set a runepage
+
 ## [0.2.0] - 2022-03-23
 ### Added
 - complete method documentation for Teemo

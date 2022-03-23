@@ -10,6 +10,7 @@ class EventCode {
   static const int RESPONSE = 8;
 }
 
+/// EventSubscription methods can be used to manipulate subscriptions, however Teemo provides all the necessary abstraction.
 class EventSubscription {
   Map<String, List<Handler>> _registeredUris = {};
   Map<String, List<Handler>> _registeredPaths = {};
