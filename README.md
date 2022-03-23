@@ -99,7 +99,7 @@ supply a `default_handler`. If you don't the automatic behavior is to log it as 
 ### Q: How do I interact with messages coming from events?
 ### A:
 Messages come from endpoints. To catch an endpoint for special processing,
-use subscription_filter_endpoint from Teemo, or filter_endpoint from the subscription.
+use `subscription_filter_endpoint` from Teemo, or `filter_endpoint` from the subscription.
 these methods make the 'handler' argument run instead of the event's default handler.
 
 ###	REMEMBER TO MAKE EVENT HANDLER METHODS ASYNC
