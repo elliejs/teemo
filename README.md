@@ -8,7 +8,7 @@ Teemo is hosted on [pub.dev](pub.dev), which means you can get it with Flutter's
 ```bash
 $ flutter pub add teemo
 ```
-This will add a line to your [pubspec.yaml]:
+This will add a line to your [pubspec.yaml](pubspec.yaml):
 ```
 dependencies:
   teemo: ^0.2.1
