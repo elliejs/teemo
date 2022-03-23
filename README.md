@@ -130,5 +130,12 @@ await teemo.request('POST', '/lol-lobby/v2/lobby', body: {
 ```
 This code snippet will send the user to a custom practice tool lobby.
 
+### Fixing sandboxing issues on MacOS
+Getting the error: "ps aux not authorized"? This is because by default MacOS apps are sandboxed and can't read the running processes. In your app's `macos/Runner/DebugProfile.entitlements` and `macos/Runner/Release.entitlements` comment out the line:
+```
+<!-- <key>com.apple.security.app-sandbox</key>
+<true/> -->
+```
+
 ---
 *Teemo isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.*
