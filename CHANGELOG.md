@@ -1,11 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.4] - 2022-03-23
+### Fixed
+- willump references
+
 ## [0.2.3] - 2022-03-23
-- fix broken link
+### Fixed
+- broken link
 
 ## [0.2.2] - 2022-03-23
-- added a proper README
+### Added
+- a proper README
 
 ## [0.2.1] - 2022-03-23
 ### Added

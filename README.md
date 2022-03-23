@@ -11,9 +11,9 @@ $ flutter pub add teemo
 This will add a line to your [pubspec.yaml](pubspec.yaml):
 ```
 dependencies:
-  teemo: ^0.2.1
+  teemo: ^0.2.4
 ```
-Note: 0.2.1 was the current version at time of writing. It will show up in your pubspec as whatever is the most current version.
+**Note**: 0.2.4 was the current version at time of writing. It will show up in your pubspec as whatever is the most current version.
 
 If you do not see this in your pubspec.yaml, run:
 ```bash
@@ -83,8 +83,8 @@ FutureBuilder<Teemo>(
 ### A:
 Events are server side concepts. There are a many events you can subscribe to.
 They are names for many different api updates that fall under their umbrella.
-Use - request('get', '/help') - to get a JSON blob with a list of all possible events to subscribe to.
-When events are triggered, they send the new data to willump.
+Use - `request('get', '/help')` - to get a JSON blob with a list of all possible events to subscribe to.
+When events are triggered, they send the new data to Teemo.
 Each update is of an endpoint underneath Event umbrella.
 TL;DR
   Events are names for groups of endpoints.
@@ -92,14 +92,14 @@ TL;DR
 
 ### Q: How do I use events?
 ### A:
-Subscribe to an event to begin receiving its messages. The default_handler argument
+Subscribe to an event to begin receiving its messages. The `default_handler` argument
 runs every time a message is received and not otherwise handled. You don't need to
-supply a default_handler. If you don't the automatic behavior is to log it as info.
+supply a `default_handler`. If you don't the automatic behavior is to log it as info.
 
 ### Q: How do I interact with messages coming from events?
 ### A:
 Messages come from endpoints. To catch an endpoint for special processing,
-use subscription_filter_endpoint from willump, or filter_endpoint from the subscription.
+use subscription_filter_endpoint from Teemo, or filter_endpoint from the subscription.
 these methods make the 'handler' argument run instead of the event's default handler.
 
 ###	REMEMBER TO MAKE EVENT HANDLER METHODS ASYNC
