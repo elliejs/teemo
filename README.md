@@ -26,7 +26,10 @@ import 'package:teemo/teemo.dart';
 ```
 
 ## Using Teemo
-Since Teemo is asynchronous, you will need to use it inside asynchronous widgets like `FutureBuilder`. An example is below, and a working code sample can be found at [example/lib/main.dart].
+Method documentation to help you with your development can be found [here](https://pub.dev/documentation/teemo/latest/teemo/teemo-library.html).
+
+
+Since Teemo is asynchronous, you will need to use it inside asynchronous widgets like `FutureBuilder`. An example is below, and a working code sample can be found at [example/lib/main.dart](example/lib/main.dart).
 
 ```dart
 FutureBuilder<Teemo>(

@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2022-03-23
+- added a proper README
+
 ## [0.2.1] - 2022-03-23
 ### Added
 - added more docs
