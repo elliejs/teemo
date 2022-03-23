@@ -2,6 +2,8 @@
 
 Teemo is a dart library which provides an intuitive interface to the League of Legends LCU API
 
+![](Teemo_demo.gif)
+
 ## Installing Teemo
 Teemo is hosted on [pub.dev](pub.dev), which means you can get it with Flutter's built in `pub add` command.
 
