@@ -1,6 +1,9 @@
 typedef JsonData = Map<String, dynamic>;
+
+/// The type of ALL Teemo behavior callbacks. an asynchronous void function which consumes JSON.
 typedef Handler = Future<void> Function(JsonData data);
 
+/// The three LCU ids for requesting levels of activity on events.
 class EventCode {
   static const int SUBSCRIBE = 5;
   static const int UNSUBSCRIBE = 6;
@@ -16,9 +19,12 @@ class EventSubscription {
     print(data);
   }
 
+  /// Default constructor uses the private defaultbehavior handler for all unhandled endpoints, which is to print all JSON consumed.
+  /// Provide a [Handler] argument to override the subscription's default behavior on all incoming messages.
   EventSubscription(
       [this._defaultBehavior = EventSubscription._defaultBehaviorImpl]);
 
+  /// filters an endpoint to be consumed with special behavior. if [endpoint] ends in '*', all URIs starting with endpoint are consumed by this filter.
   void filterEndpoint(String endpoint,
       {Handler behavior = EventSubscription._defaultBehaviorImpl}) {
     if (endpoint.endsWith('*')) {
@@ -32,6 +38,7 @@ class EventSubscription {
     }
   }
 
+  /// unfilters an endpoint. To unfilter an endpoint which ended in '*', provide the '*' here too.
   void unfilterEndpoint(String endpoint) {
     if (endpoint.endsWith('*')) {
       //then this is a path and we want to glob match
@@ -41,6 +48,7 @@ class EventSubscription {
     }
   }
 
+  /// A mostly private method for Teemo to gather all handlers which match the incoming [data] from the LCU server.
   List<Future<void>> tasks(JsonData data) {
     List<Handler> tasks = [];
 

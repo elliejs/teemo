@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2022-03-23
+### Added
+- complete method documentation for Teemo
+- Runes class and ability for Teemo to set runepages
+
 ## [0.1.2] - 2022-03-03
 ### Fixed
 - formatting with `flutter format .`
