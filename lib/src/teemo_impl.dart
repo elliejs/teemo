@@ -50,6 +50,38 @@ class Teemo {
           if (authKey != '' && port >= 0) break;
         }
       }
+
+      if (Platform.isWindows) {
+        var result = await Process.start(
+          'cmd ',
+          [],
+        );
+
+        result.stdout.transform(utf8.decoder).forEach((String string) {
+          if (string.contains('--riotclient')) {
+            List args =
+                string.replaceAll('  ', '').replaceAll('"', '').split(' ');
+
+            for (var keyVal in args) {
+              final key = keyVal.split('=')[0];
+              if (key == '--remoting-auth-token') {
+                authKey = keyVal.split('=')[1];
+              }
+              if (key == '--app-port') {
+                port = int.parse(keyVal.split('=')[1]);
+              }
+            }
+          }
+        });
+
+        result.stdin.writeln(
+            "wmic PROCESS WHERE name='LeagueClientUx.exe' GET commandline");
+
+        await Future.delayed(
+          const Duration(milliseconds: 500),
+          () => result.kill(),
+        );
+      }
       if (authKey != '' && port >= 0) break;
       /* print('waiting, will retry'); */
       await new Future.delayed(Duration(seconds: retryAfter));
@@ -59,7 +91,6 @@ class Teemo {
     if (authKey == '' || port == -1) print('something\'s gone wrong');
 
     print(authKey + ':' + port.toString());
-
     String cert =
         await rootBundle.loadString('packages/teemo/assets/riotgames.pem');
     print(cert);
