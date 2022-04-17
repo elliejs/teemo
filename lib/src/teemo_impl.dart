@@ -58,29 +58,29 @@ class Teemo {
         );
 
         result.stdout.transform(utf8.decoder).forEach((String string) {
-          if (string.contains('--riotclient')) {
-            List args =
-                string.replaceAll('  ', '').replaceAll('"', '').split(' ');
+          if (string.contains("League of Legends")) {
+            String path =
+                string.split('\n')[1].split(':')[1].replaceAll(r'\', '/');
+            path = path.substring(0, path.length - 1);
 
-            for (var keyVal in args) {
-              final key = keyVal.split('=')[0];
-              if (key == '--remoting-auth-token') {
-                authKey = keyVal.split('=')[1];
-              }
-              if (key == '--app-port') {
-                port = int.parse(keyVal.split('=')[1]);
-              }
-            }
+            String directory =
+                string.split('\n')[1].split(':')[0].split('').last;
+
+            File file = File('$directory:$path/lockfile'.replaceAll('\n', ''));
+
+            String content = file.readAsStringSync();
+
+            List<String> args = content.split(':');
+
+            authKey = args[3];
+
+            port = int.parse(args[2]);
+
+            result.kill();
           }
         });
 
-        result.stdin.writeln(
-            "wmic PROCESS WHERE name='LeagueClientUx.exe' GET commandline");
-
-        await Future.delayed(
-          const Duration(milliseconds: 500),
-          () => result.kill(),
-        );
+        result.stdin.writeln("cd / && dir LeagueClient.exe /s /p");
       }
       if (authKey != '' && port >= 0) break;
       /* print('waiting, will retry'); */
