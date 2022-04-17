@@ -50,6 +50,38 @@ class Teemo {
           if (authKey != '' && port >= 0) break;
         }
       }
+
+      if (Platform.isWindows) {
+        var result = await Process.start(
+          'cmd ',
+          [],
+        );
+
+        result.stdout.transform(utf8.decoder).forEach((String string) {
+          if (string.contains("League of Legends")) {
+            String path =
+                string.split('\n')[1].split(':')[1].replaceAll(r'\', '/');
+            path = path.substring(0, path.length - 1);
+
+            String directory =
+                string.split('\n')[1].split(':')[0].split('').last;
+
+            File file = File('$directory:$path/lockfile'.replaceAll('\n', ''));
+
+            String content = file.readAsStringSync();
+
+            List<String> args = content.split(':');
+
+            authKey = args[3];
+
+            port = int.parse(args[2]);
+
+            result.kill();
+          }
+        });
+
+        result.stdin.writeln("cd / && dir LeagueClient.exe /s /p");
+      }
       if (authKey != '' && port >= 0) break;
       /* print('waiting, will retry'); */
       await new Future.delayed(Duration(seconds: retryAfter));
@@ -59,7 +91,6 @@ class Teemo {
     if (authKey == '' || port == -1) print('something\'s gone wrong');
 
     print(authKey + ':' + port.toString());
-
     String cert =
         await rootBundle.loadString('packages/teemo/assets/riotgames.pem');
     print(cert);
